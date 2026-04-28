@@ -1,23 +1,10 @@
-require('dotenv').config();
+const db = require('./dbConnection')
 const express = require('express')
-const mongoose = require("mongoose")
 const app = express()
 const port = process.env.PORT;
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB Connected"))
-    .catch((err) => console.log("Mongo Error:", err));
 
-
-const userSchema = new mongoose.Schema({
-    name: { type: String },
-    email: { type: String },
-    job: { type: String }
-
-}, { timestamps: true });
-
-const User = mongoose.model("user", userSchema);
 
 app.get('/users', async (req, res) => {
     const allUsers = await User.find({});
